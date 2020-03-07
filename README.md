@@ -4,6 +4,7 @@ The following lab material goes with the _Path to GitOps &ndash; Migrating to Wo
 ## Lab Material
 This lab uses [Digital Ocean Managed Kubernetes](https://www.digitalocean.com/products/kubernetes/) to host this topic. Please follow these in-order as you follow the presentation.
 
+
 ### Create Kubernetes Cluster
 
 ```sh
@@ -75,16 +76,13 @@ kubectl create namespace workflows
 kubectl -n workflows create rolebinding default-admin --clusterrole=admin --serviceaccount=default:default
 ```
 
-#### Echo Test Service - Ingress
-
-```sh
-kubectl create -f config/echo-service.yaml
-kubectl create -f config/echo-ingress.yaml
-```
-
 #### Argo - Ingress
 
 ```sh
+# Deploying Test Service for deubgging
+kubectl create -f config/echo-service.yaml
+kubectl create -f config/echo-ingress.yaml
+
 kubectl create -f config/argo-server-ingress.yaml
 ```
 
