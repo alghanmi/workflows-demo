@@ -78,9 +78,6 @@ cd ..
 ```sh
 kubectl create namespace argo
 kubectl apply -n argo -f https://raw.githubusercontent.com/argoproj/argo/stable/manifests/install.yaml
-
-kubectl create namespace workflows
-kubectl -n workflows create rolebinding default-admin --clusterrole=admin --serviceaccount=default:default
 ```
 
 #### Argo - Ingress
@@ -93,7 +90,44 @@ kubectl create -f config/echo-ingress.yaml
 kubectl create -f config/argo-server-ingress.yaml
 ```
 
-### Lab Clean-up
+## Workflow Demos
+
+### RBAC
+
+```sh
+kubectl create namespace workflows
+kubectl -n workflows create rolebinding default-admin --clusterrole=admin --serviceaccount=workflows:default
+```
+
+### WF1 - Hello World
+
+```sh
+kubectl create -f workflows/hello-world.yaml
+kubectl -n workflows get wf
+export WF=$(kubectl -n workflows get wf | grep '^hello-world' | head -1 | awk '{ print $1 }')
+kubectl -n workflows get wf $WF
+kubectl -n workflows get po --selector=workflows.argoproj.io/workflow=$WF
+kubectl -n workflows logs $WF -c main
+```
+
+### WF2 - Coinflip
+
+```sh
+argo -n workflows submit  --watch workflows/coinflip.yaml
+argo -n workflows list
+export WF=$(kubectl -n workflows get wf | grep '^coinflip' | head -1 | awk '{ print $1 }')
+argo -n workflows get $WF
+```
+You can always see the pods logs using `argo -n workflows logs`
+
+### WF3 - Coinflip Recursive
+
+```sh
+argo -n workflows submit  --watch workflows/coinflip-recursive.yaml
+```
+
+
+## Lab Clean-up
 
 ```sh
 cd terraform-cluster
