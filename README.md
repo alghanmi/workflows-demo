@@ -100,4 +100,6 @@ terraform destroy -auto-approve
 cd ..
 
 for lb in $(doctl compute load-balancer list -o json | jq --raw-output '.[] | .id'); do doctl compute load-balancer delete --force $lb; done
+
+find . -name "terraform.tfstate*" -exec rm {} \;
 ```
