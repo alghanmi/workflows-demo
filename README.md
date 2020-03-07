@@ -52,6 +52,7 @@ kubectl apply --validate=false -f https://raw.githubusercontent.com/jetstack/cer
 
 kubectl create namespace cert-manager
 helm install cert-manager jetstack/cert-manager --namespace cert-manager
+watch -n 2 'kubectl get pods -n cert-manager'
 ```
 
 #### Cert Manager - Setup Let's Encrypt Certificate `ClusterIssuer`
@@ -153,7 +154,7 @@ terraform destroy -auto-approve
 cd ..
 
 cd terraform-dns
-terraform destroy -auto-approve
+terraform destroy -auto-approve -var="ipv4_address=$KUBE_INGRESS_IP"
 cd ..
 
 for lb in $(doctl compute load-balancer list -o json | jq --raw-output '.[] | .id'); do doctl compute load-balancer delete --force $lb; done
