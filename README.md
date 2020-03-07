@@ -72,21 +72,16 @@ kubectl create -f config/echo-service.yaml
 kubectl create -f config/echo-ingress.yaml
 ```
 
-
-
-
-
-
-
-
 ## Destroy
 
 ```sh
 cd terraform-cluster
-terraform destroy
+terraform destroy -auto-approve
 cd ..
 
 cd terraform-dns
-terraform destroy
+terraform destroy -auto-approve
 cd ..
+
+for lb in $(doctl compute load-balancer list -o json | jq --raw-output '.[] | .id'); do doctl compute load-balancer delete --force $lb; done
 ```
