@@ -106,14 +106,14 @@ kubectl create -f workflows/hello-world.yaml
 kubectl -n workflows get wf
 export WF=$(kubectl -n workflows get wf | grep '^hello-world' | head -1 | awk '{ print $1 }')
 kubectl -n workflows get wf $WF
-kubectl -n workflows get po --selector=workflows.argoproj.io/workflow=$WF
+kubectl -n workflows get pod --selector=workflows.argoproj.io/workflow=$WF
 kubectl -n workflows logs $WF -c main
 ```
 
 ### WF2 - Coinflip
 
 ```sh
-argo -n workflows submit  --watch workflows/coinflip.yaml
+argo -n workflows submit --watch workflows/coinflip.yaml
 argo -n workflows list
 export WF=$(kubectl -n workflows get wf | grep '^coinflip' | head -1 | awk '{ print $1 }')
 argo -n workflows get $WF
@@ -123,9 +123,27 @@ You can always see the pods logs using `argo -n workflows logs`
 ### WF3 - Coinflip Recursive
 
 ```sh
-argo -n workflows submit  --watch workflows/coinflip-recursive.yaml
+argo -n workflows submit --watch workflows/coinflip-recursive.yaml
 ```
 
+### WF4 - Maps and Loops
+
+```sh
+argo -n workflows submit --watch workflows/loops-maps.yaml
+```
+
+### WF5 - Nest Workflows and Parallelism
+
+```sh
+argo -n workflows submit --watch workflows/parallelism-nested-workflow-serial.yaml
+argo -n workflows submit --watch workflows/parallelism-nested-workflow.yaml
+```
+
+### WF6 - DAG Diamond
+
+```sh
+argo -n workflows submit --watch workflows/dag-diamond-steps.yaml
+```
 
 ## Lab Clean-up
 

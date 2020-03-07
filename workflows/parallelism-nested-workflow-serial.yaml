@@ -1,0 +1,48 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: parallelism-nested-workflow-serial-
+  namespace: workflows
+spec:
+  arguments:
+    parameters:
+    - name: seq-list
+      value: |
+        ["a","b"]
+  entrypoint: A
+  templates:
+  - name: A
+    parallelism: 1
+    inputs:
+      parameters:
+      - name: seq-list
+    steps:
+    - - name: seq-step
+        template: B
+        arguments:
+          parameters:
+          - name: seq-id
+            value: "{{item}}"
+        withParam: "{{inputs.parameters.seq-list}}"
+
+  - name: B
+    inputs:
+      parameters:
+      - name: seq-id
+    steps:
+    - - name: jobs
+        template: one-job
+        arguments:
+          parameters:
+          - name: seq-id
+            value: "{{inputs.parameters.seq-id}}"
+        withParam: "[1, 2]"
+
+  - name: one-job
+    inputs:
+      parameters:
+      - name: seq-id
+    container:
+      image: alpine
+      command: ['/bin/sh', '-c']
+      args: ["echo {{inputs.parameters.seq-id}}; sleep 10"]
