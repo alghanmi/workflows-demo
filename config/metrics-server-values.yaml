@@ -1,0 +1,4 @@
+---
+args:
+  - --metric-resolution=60s
+  - --kubelet-preferred-address-types=InternalIP
