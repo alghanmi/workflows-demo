@@ -1,9 +1,16 @@
 # Path to GitOps &ndash; Migrating to Workflows
+
 The following lab material goes with the _Path to GitOps &ndash; Migrating to Workflows_ presentation. The goal of this presentation is to discuss migrating from existing monolithic CI/CD piplines for applications and migrate them to _Workflows_.
 
 ## Lab Material
+
 This lab uses [Digital Ocean Managed Kubernetes](https://www.digitalocean.com/products/kubernetes/) to host this topic. Please follow these in-order as you follow the presentation.
 
+### Initial Prep
+
+1. Install [Terraform](https://www.terraform.io/downloads.html)
+1. Install `doctl` the [DigitalOcean CLI](https://github.com/digitalocean/doctl#installing-doctl) (Optional)
+1. Install [Argo CLI](https://argoproj.github.io/docs/argo/docs/getting-started.html)
 
 ### Create Kubernetes Cluster
 
