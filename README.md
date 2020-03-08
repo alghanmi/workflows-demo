@@ -1,6 +1,6 @@
 # Path to GitOps &ndash; Migrating to Workflows
 
-The following lab material goes with the _Path to GitOps &ndash; Migrating to Workflows_ presentation. The goal of this presentation is to discuss migrating from existing monolithic CI/CD piplines for applications and migrate them to _Workflows_.
+The following lab material goes with the [_Path to GitOps &ndash; Migrating to Workflows_](https://docs.google.com/presentation/d/1yj0TIpr2pgw7_-6ABb1yc3274pCZkoz90LWau6kku58/edit?usp=sharing) presentation. The goal of this presentation is to discuss migrating from existing monolithic CI/CD piplines for applications and migrate them to _Workflows_.
 
 ## Lab Material
 
